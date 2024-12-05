@@ -2,4 +2,12 @@
 client    ansible_host=192.168.0.129 ansible_user=client ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
 
 [test]
-root      ansible_host=95.163.229.59 ansible_user=root ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
+root         ansible_host=95.163.229.59 ansible_user=root ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
+#lu-amethyst  ansible_host=91.224.86.113 ansible_user=lu-amethyst ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
+root         ansible_host=89.104.68.129 ansible_user=root ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
+
+[all]
+client       ansible_host=192.168.0.129 ansible_user=client ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
+root         ansible_host=95.163.229.59 ansible_user=root ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
+#lu-amethyst  ansible_host=91.224.86.113 ansible_user=lu-amethyst ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa
+root         ansible_host=89.104.68.129 ansible_user=root ansible_ssh_private_key_file=/home/lutulkina/.ssh/id_rsa

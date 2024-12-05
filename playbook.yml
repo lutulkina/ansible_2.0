@@ -1,10 +1,51 @@
 ---
 - name: install Apache Web Server
-  hosts: all
+  hosts: test
+  vars_files:
+    - vars/vars.yml
 
   tasks:
-  - name: install Apache webserver
-    apt: name=apache2 state=latest
+  - block: # block for Debian
+      - name: install Apache webserver for Debian
+        apt: name=apache2 state=latest
+      - name: Start Apache webserver for Debian
+        service: name=apache2 state=started enabled=yes
+        tags: install
+    when: ansible_os_family == "Debian"
 
-  - name: Start Apache and Enable it on the every boot
-    service: name=apache2 state=started enabled=yes
+  - block: # block for RedHat
+      - name: install Apache webserver for RedHat
+        yum: name=httpd state=latest
+      - name: Start Apache webserver for RedHat
+        service: name=httpd state=started enabled=yes
+        tags: install
+    when: ansible_os_family == "RedHat"
+
+  - name: Create document root
+    file:
+      path: "var/www/html"
+      state: "directory"
+      owner: "{{ app_user }}"
+      mode: "0755"
+
+  - name: Copy index page
+    template:
+      src: "{{ source_file }}"
+      dest: "var/www/html"
+      notify: restart Apache
+
+  - name: Allow all access to tcp port 80
+    ufw:
+      rule: allow
+      port: "80"
+      proto: tcp
+      tags: firewall
+
+  handlers:
+   - name: Restart Apache Debian
+     service: name=apache2 state=restarted
+     when: ansible_os_family == "Debian"
+
+   - name: Restart Apache RedHat
+     service: name=apache2 state=restarted
+     when: ansible_os_family == "Debian"

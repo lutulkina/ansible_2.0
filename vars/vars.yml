@@ -1,0 +1,4 @@
+---
+app_user: "root"
+source_file: "/home/lutulkina/ansible_2.0/index.html"
+http_host: "95.163.229.59"
